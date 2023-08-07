@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserServices {
     UserDTO registerNewUser(UserCadasterDto usuarioCadastro);
+    UserDTO findUserByUsername(String username);
 }
