@@ -5,7 +5,7 @@ import com.MyBlog.Security.exceptions.ObjectConflictException;
 import com.MyBlog.Security.exceptions.ObjectNotFoundException;
 import com.MyBlog.Security.models.User;
 import com.MyBlog.Security.repository.UserRepository;
-import enums.Role;
+import com.MyBlog.Security.enums.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
