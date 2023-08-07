@@ -1,6 +1,6 @@
 package com.MyBlog.Security.models;
 
-import enums.Role;
+import com.MyBlog.Security.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
