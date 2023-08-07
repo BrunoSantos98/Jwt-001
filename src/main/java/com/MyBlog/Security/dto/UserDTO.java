@@ -1,6 +1,6 @@
 package com.MyBlog.Security.dto;
 
-import enums.Role;
+import com.MyBlog.Security.enums.Role;
 
-public record UserDTO(String name, String username, String password, Role role, String email) {
+public record UserDTO(String name, String username, Role role, String email) {
 }
