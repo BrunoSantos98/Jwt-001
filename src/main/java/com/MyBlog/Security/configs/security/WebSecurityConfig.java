@@ -2,6 +2,7 @@ package com.MyBlog.Security.configs.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 
 import org.springframework.security.config.Customizer;
@@ -18,9 +19,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/user/register").permitAll()
-                        .requestMatchers(HttpMethod.GET).authenticated()
-                        .requestMatchers(HttpMethod.PATCH,"/user/**").authenticated())
+                .authorizeHttpRequests(auth ->{
+                    auth.requestMatchers(HttpMethod.POST, "/api/v1/register").permitAll();
+                    auth.requestMatchers(HttpMethod.GET).authenticated();
+                    auth.requestMatchers(HttpMethod.PATCH, "/api/v1/user/**").authenticated();
+                })
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
