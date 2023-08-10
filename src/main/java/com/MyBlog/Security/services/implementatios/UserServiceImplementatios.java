@@ -8,7 +8,10 @@ import com.MyBlog.Security.models.User;
 import com.MyBlog.Security.repository.UserRepository;
 import com.MyBlog.Security.services.UserServices;
 import com.MyBlog.Security.enums.Role;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImplementatios implements UserServices {
 
     private final UserRepository repository;
@@ -30,6 +33,7 @@ public class UserServiceImplementatios implements UserServices {
     }
 
     @Override
+    @Transactional
     public UserDTO registerNewUser(UserCadasterDto usuarioCadastro) {
         verifyIfUserExists(usuarioCadastro);
         User usuario = new User(null, usuarioCadastro.name(), usuarioCadastro.username(), usuarioCadastro.password(),
