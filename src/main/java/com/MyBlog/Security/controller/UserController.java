@@ -1,11 +1,8 @@
 package com.MyBlog.Security.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.MyBlog.Security.dto.UserCadasterDto;
+import org.springframework.http.ResponseEntity;
 
-@RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/user")
 public interface UserController {
+    public ResponseEntity registerNewUser(UserCadasterDto usuarioCadastro);
 }
