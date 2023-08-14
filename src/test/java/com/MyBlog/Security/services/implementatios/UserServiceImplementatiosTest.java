@@ -96,4 +96,28 @@ class UserServiceImplementatiosTest {
         verify(repository,times(1)).existsByUsername(usuarioCadastro.username());
         assertEquals("Usuario não encontrado na base de dados através do username fornecido", e.getMessage());
     }
+
+    @Test
+    @DisplayName("Encontrando um usuario pelo email")
+    public void shouldBeFindUserByEmail(){
+        given(repository.existsByEmail(usuarioCadastro.email())).willReturn(true);
+        given(repository.findByEmail(usuarioCadastro.email())).willReturn(usuario);
+
+        implementation.findUserByEmail(usuarioCadastro.email());
+
+        verify(repository,times(1)).existsByEmail(usuarioCadastro.email());
+        verify(repository,times(1)).findByEmail(usuarioCadastro.email());
+    }
+
+    @Test
+    @DisplayName("Falha ao encontrar usuario pelo email")
+    public void shouldBeNotFindUserByEmail(){
+        given(repository.existsByEmail(usuarioCadastro.email())).willReturn(false);
+
+        ObjectNotFoundException e = assertThrows(ObjectNotFoundException.class,
+                () -> implementation.findUserByEmail(usuarioCadastro.email()));
+
+        verify(repository,times(1)).existsByEmail(usuarioCadastro.email());
+        assertEquals("Usuario não encontrado na base de dados através do email fornecido", e.getMessage());
+    }
 }

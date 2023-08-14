@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -49,7 +50,18 @@ class UserControllerImplementationsTest {
     }
 
     @Test
-    @DisplayName("Endpoint Localizar Usuario")
+    @DisplayName("Endpoint Não autorrizado")
+    @WithAnonymousUser
+    void shouldBeNotFoundAUserByUsername() throws Exception {
+
+        mockMvc.perform(get(url + "/findUserByUsername").param("username", usuarioCadastro.username()))
+                .andExpect(status().isUnauthorized())
+                .andDo(print())
+                .andReturn();
+    }
+
+    @Test
+    @DisplayName("Localizar Usuario pelo username")
     @WithMockUser(username = "Carlos001", password = "senha1234")
     void shouldBeFoundAUserByUsername() throws Exception {
         given(services.findUserByUsername(usuarioCadastro.username())).willReturn(usuarioDto);
@@ -63,13 +75,17 @@ class UserControllerImplementationsTest {
     }
 
     @Test
-    @DisplayName("Endpoint Não Localizar Usuario")
-    @WithAnonymousUser
-    void shouldBeNotFoundAUserByUsername() throws Exception {
+    @DisplayName("Localiza usuarrio por email")
+    @WithMockUser(username = "Carlos001", password = "senha1234")
+    void shouldBeFindUserByEmail() throws Exception {
+        given(services.findUserByEmail(usuarioDto.email())).willReturn(usuarioDto);
 
-        mockMvc.perform(get(url + "/findUserByUsername").param("username", usuarioCadastro.username()))
-                .andExpect(status().isUnauthorized())
+        mockMvc.perform(get(url + "/findUserByEmail").param("email", usuarioDto.email()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(usuarioDto)))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andReturn();
     }
+
 }

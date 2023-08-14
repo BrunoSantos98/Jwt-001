@@ -4,6 +4,7 @@ import com.MyBlog.Security.dto.UserCadasterDto;
 import org.springframework.http.ResponseEntity;
 
 public interface UserController {
-    public ResponseEntity registerNewUser(UserCadasterDto usuarioCadastro);
-    public ResponseEntity findUserByUsername(String username);
+    ResponseEntity registerNewUser(UserCadasterDto usuarioCadastro);
+    ResponseEntity findUserByUsername(String username);
+    ResponseEntity findByEmail(String email);
 }

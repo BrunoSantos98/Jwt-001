@@ -48,4 +48,12 @@ public class UserServiceImplementatios implements UserServices {
         }
         throw new ObjectNotFoundException("Usuario não encontrado na base de dados através do username fornecido");
     }
+
+    @Override
+    public UserDTO findUserByEmail(String email) {
+        if(repository.existsByEmail(email)){
+            return userToUserDto(repository.findByEmail(email));
+        }
+        throw new ObjectNotFoundException("Usuario não encontrado na base de dados através do email fornecido");
+    }
 }

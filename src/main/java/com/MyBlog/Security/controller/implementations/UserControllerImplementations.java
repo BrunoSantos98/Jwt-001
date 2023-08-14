@@ -28,4 +28,10 @@ public class UserControllerImplementations implements UserController {
     public ResponseEntity findUserByUsername(@RequestParam String username) {
         return ResponseEntity.ok(services.findUserByUsername(username));
     }
+
+    @Override
+    @GetMapping("/findUserByEmail")
+    public ResponseEntity findByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(services.findUserByEmail(email));
+    }
 }
