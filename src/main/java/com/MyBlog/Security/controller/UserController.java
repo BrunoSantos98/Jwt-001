@@ -5,4 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserController {
     public ResponseEntity registerNewUser(UserCadasterDto usuarioCadastro);
+    public ResponseEntity findUserByUsername(String username);
 }
