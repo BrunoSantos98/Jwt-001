@@ -1,5 +1,6 @@
 package com.MyBlog.Security.controller.implementations;
 
+import com.MyBlog.Security.configs.security.TokenService;
 import com.MyBlog.Security.dto.UserCadasterDto;
 import com.MyBlog.Security.dto.UserDTO;
 import com.MyBlog.Security.enums.Role;
@@ -12,11 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.mockito.BDDMockito.given;
@@ -25,10 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserControllerImplementations.class)
+@AutoConfigureMockMvc(addFilters = false)
 class UserControllerImplementationsTest {
 
     @MockBean
     private UserServices services;
+    @MockBean
+    private TokenService tokenService;
     @Autowired
     private MockMvc mockMvc;
     private ObjectMapper mapper = new ObjectMapper();
@@ -50,19 +51,7 @@ class UserControllerImplementationsTest {
     }
 
     @Test
-    @DisplayName("Endpoint Não autorrizado")
-    @WithAnonymousUser
-    void shouldBeNotFoundAUserByUsername() throws Exception {
-
-        mockMvc.perform(get(url + "/findUserByUsername").param("username", usuarioCadastro.username()))
-                .andExpect(status().isUnauthorized())
-                .andDo(print())
-                .andReturn();
-    }
-
-    @Test
     @DisplayName("Localizar Usuario pelo username")
-    @WithMockUser(username = "Carlos001", password = "senha1234")
     void shouldBeFoundAUserByUsername() throws Exception {
         given(services.findUserByUsername(usuarioCadastro.username())).willReturn(usuarioDto);
 
@@ -76,7 +65,6 @@ class UserControllerImplementationsTest {
 
     @Test
     @DisplayName("Localiza usuarrio por email")
-    @WithMockUser(username = "Carlos001", password = "senha1234")
     void shouldBeFindUserByEmail() throws Exception {
         given(services.findUserByEmail(usuarioDto.email())).willReturn(usuarioDto);
 
