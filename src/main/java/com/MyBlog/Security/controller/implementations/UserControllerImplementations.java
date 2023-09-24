@@ -1,12 +1,10 @@
 package com.MyBlog.Security.controller.implementations;
 
-import com.MyBlog.Security.configs.security.TokenService;
 import com.MyBlog.Security.controller.UserController;
 import com.MyBlog.Security.dto.LoginDto;
 import com.MyBlog.Security.dto.UserCadasterDto;
 import com.MyBlog.Security.services.UserServices;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,14 +33,12 @@ public class UserControllerImplementations implements UserController {
 
     @Override
     @GetMapping("/findUserByUsername")
-    @PreAuthorize("hasRole('User')")
     public ResponseEntity findUserByUsername(@RequestParam String username) {
         return ResponseEntity.ok(services.findUserByUsername(username));
     }
 
     @Override
     @GetMapping("/findUserByEmail")
-    @PreAuthorize("hasRole('User')")
     public ResponseEntity findByEmail(@RequestParam String email) {
         return ResponseEntity.ok(services.findUserByEmail(email));
     }
