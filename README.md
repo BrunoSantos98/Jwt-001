@@ -1,6 +1,6 @@
-# MyBlog-Backend
+# jwt-001
 
-Este é o back-end da aplicação myblog que estou construindo com a função de cadastrar novos usuarios, fazer controle de roles, efetuar login e criar sessões.
+Este é o back-end da aplicação myblog que estou construindo com a função de cadastrar novos usuarios, fazer controle de roles, efetuar login.
 
 ---
 
